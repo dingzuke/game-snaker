@@ -1,0 +1,27 @@
+/* @import url(//at.alicdn.com/t/font_1078057_h88wfa0ccus.css); */
+.content {
+    text-align: center;
+    .main{
+        border: skyblue 1px solid;
+        background: #ccc;
+        display: inline-block;
+        .row{
+            font-size: 0;
+            .col {
+                width: 18px;
+                height: 18px;
+                border: skyblue 1px solid;
+                display: inline-block;
+            }
+            .snake {
+                background-color: blue;
+                @extend .col;
+            }
+            .egg {
+                background-color: red;
+                @extend .col;
+            }
+        }
+    }
+}
+
