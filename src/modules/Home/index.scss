@@ -1,6 +1,14 @@
 /* @import url(//at.alicdn.com/t/font_1078057_h88wfa0ccus.css); */
 .content {
     text-align: center;
+    .direction{
+        padding: 20px;
+        .iconBt{
+            font-size: 25px;
+            padding-top: 20px;
+            cursor: pointer;
+        }
+    }
     .main{
         border: skyblue 1px solid;
         background: #ccc;
@@ -14,11 +22,11 @@
                 display: inline-block;
             }
             .snake {
-                background-color: blue;
+                background-color: #03A9F4;
                 @extend .col;
             }
             .egg {
-                background-color: red;
+                background-color: #ff5722;
                 @extend .col;
             }
         }
