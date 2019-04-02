@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notification, Icon, Tooltip } from 'antd';
+import { notification, Icon, Tooltip, Statistic } from 'antd';
 const css = require('./index.scss');
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
 			snakeLen: 3, // 初始化 蛇长度
 			snakeBody: [], // 蛇身体 二维数组
 			direction: 'right', // 蛇移动方向: right(默认右) left(左) down(下) up(上)
-			upDateTime: 400, // 更新时间,
+			upDateTime: 400, // 更新时间, 100困难 250一般 400简单
 			timerFun: undefined, // 定时器
 			gameState: 'play' // 游戏状态 play:开始  pause: 暂停
 		};
@@ -22,11 +22,12 @@ class App extends Component {
 		this.initTableData();
 	}
 	render() {
-		let { gameState } = this.state;
+		let { gameState, snakeBody, snakeLen } = this.state;
+		let score = snakeBody.length - snakeLen;
 		return (
 			<div className={css.content}>
 				<div className={css.direction}>
-					<div>键盘操作说明: ↑ ↓ ← →</div>
+					<Statistic title="" value={score} prefix={<Icon type="star" theme="filled" style={{ color: '#ff5722' }}/>} />
 					{
 						gameState === 'pause' && 
 						<Tooltip placement="top" title={'继续'}>
@@ -49,6 +50,7 @@ class App extends Component {
 				<div className={css.main}>
 					{this.drawTable()}
 				</div>
+				<div>键盘操作说明:  ↑  ↓  ←  →</div>
 			</div>
 		);
 	}
@@ -191,7 +193,7 @@ class App extends Component {
 					className = css.col;
 					break;
 			}
-			return (<div key={Math.random()} className={className}></div>);
+			return (<div key={Math.random()} className={className}> {item === 'egg' && <Icon type="star" theme="filled" style={{ fontSize: '16px', color: '#ff5722' }}/>}</div>);
 		});
 	}
 	/**

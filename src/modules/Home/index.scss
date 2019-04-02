@@ -20,13 +20,14 @@
                 height: 18px;
                 border: skyblue 1px solid;
                 display: inline-block;
+                overflow: hidden;
             }
             .snake {
                 background-color: #03A9F4;
                 @extend .col;
             }
             .egg {
-                background-color: #ff5722;
+                // background-color: #ff5722;
                 @extend .col;
             }
         }
