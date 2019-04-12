@@ -15,7 +15,8 @@ class App extends Component {
 			direction: 'right', // 蛇移动方向: right(默认右) left(左) down(下) up(上)
 			upDateTime: 400, // 更新时间, 100困难 250一般 400简单
 			timerFun: undefined, // 定时器
-			gameState: 'play' // 游戏状态 play:开始  pause: 暂停
+			gameState: 'play', // 游戏状态 play:开始  pause: 暂停
+			isChangeDirection: false, // 每次方向改变都需要等待执行完,才能进入下次改变
 		};
 	}
 	componentDidMount() {
@@ -150,10 +151,10 @@ class App extends Component {
 	getAvailableEggRC = () => {
 		let eggArr = [];
 		let { row, col, table } = this.state;
-		for (let y = 0; y < row; y++) {
-			for (let x = 0; x < col; x++) {
-				if (table[y][x] === 0) {
-					eggArr.push([y, x]);
+		for (let rowIndex = 0; rowIndex < row; rowIndex++) {
+			for (let colIndex = 0; colIndex < col; colIndex++) {
+				if (table[rowIndex][colIndex] === 0) {
+					eggArr.push([rowIndex, colIndex]);
 				}
 			}
 		}
@@ -251,10 +252,12 @@ class App extends Component {
 		this.setState({
 			snakeBody,
 			table,
+			isChangeDirection: false,
 		});
 	}
 	/**
-	 * 咬着自己身体
+	 * 判断是否咬着自己身体
+	 * @param head 头坐标
 	 */
 	eatYourBody = (head) => {
 		let { snakeBody } = this.state;
@@ -268,6 +271,7 @@ class App extends Component {
 	}
 	/**
 	 * 碰壁判断
+	 * @param head 头坐标
 	 */
 	collisionWall = (head) => {
 		let headRow =  head[0];
@@ -281,34 +285,41 @@ class App extends Component {
 		}
 		return true;
 	}
+	/**
+	 * 监听键盘事件
+	 */
 	keyUpEvent = (e) => {
-		let { direction } = this.state;
+		let { direction, isChangeDirection } = this.state;
 		// right(默认右) left(左) down(下) up(上)
 		switch (e.keyCode) {
 			case 38:
-				if (direction !== 'down') {
+				if (direction !== 'down' && !isChangeDirection) {
 					direction = 'up';
+					isChangeDirection = true;
 				}
 				break;
 			case 40:
-				if (direction !== 'up') {
+				if (direction !== 'up' && !isChangeDirection) {
 					direction = 'down';
+					isChangeDirection = true;
 				}
 				break;
 			case 37:
-				if (direction !== 'right') {
+				if (direction !== 'right' && !isChangeDirection) {
 					direction = 'left';
+					isChangeDirection = true;
 				}
 				break;
 			case 39:
-				if (direction !== 'left') {
+				if (direction !== 'left' && !isChangeDirection) {
 					direction = 'right';
+					isChangeDirection = true;
 				}
 				break;
 			default:
 				break;
 		}
-		this.setState({ direction });
+		this.setState({ direction, isChangeDirection });
 	}
 }
 
