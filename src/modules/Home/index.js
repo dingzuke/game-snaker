@@ -181,7 +181,7 @@ class App extends Component {
 		if (!Array.isArray(col)) {
 			return null;
 		}
-		return col.map((item) => {
+		return col.map((item, index) => {
 			let className;
 			switch (item) {
 				case 'egg':
@@ -194,7 +194,7 @@ class App extends Component {
 					className = css.col;
 					break;
 			}
-			return (<div key={Math.random()} className={className}> {item === 'egg' && <Icon type="star" theme="filled" style={{ fontSize: '16px', color: '#ff5722' }}/>}</div>);
+			return (<div key={index} className={className}> {item === 'egg' && <Icon type="star" theme="filled" style={{ fontSize: '16px', color: '#ff5722' }}/>}</div>);
 		});
 	}
 	/**
